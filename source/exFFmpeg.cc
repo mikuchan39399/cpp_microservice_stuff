@@ -39,6 +39,7 @@ namespace exFFmpeg
             }
             else if (line.find("#EXT") == 0) 
             {
+                if (line.find(HLS_ENDLIST) != std::string::npos) continue;
                 _headers.push_back(line);
             }
         }
@@ -63,10 +64,7 @@ namespace exFFmpeg
         {
             if(h.find(HLS_ENDLIST) != std::string::npos) has_endlist = true;
         }
-        if (!has_endlist) 
-        {
-            oss << HLS_ENDLIST << "\n";
-        }
+        oss << HLS_ENDLIST << "\n";
         return bryutil::FILE::write(_filename, oss.str());
     }
 
